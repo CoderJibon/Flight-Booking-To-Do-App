@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { DeleteListData } from "../../Redux/ReducerBookingAddList/BookingLIstAction";
 
 const ReduxToDoList = () => {
@@ -9,6 +10,11 @@ const ReduxToDoList = () => {
   const DeleteToDo = (id) => {
     const data = selector.filter((item) => item.id != id);
     dispatch(DeleteListData(data));
+    toast.warn("Boking Canceled Successfully!", {
+      position: "top-right",
+      autoClose: 1000,
+      theme: "dark",
+    });
   };
 
   return (

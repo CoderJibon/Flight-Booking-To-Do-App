@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { Form_Submit } from "../../Redux/ReducerBookingAddList/BookingLIstAction";
 import {
   ChooseClassName,
@@ -11,12 +12,30 @@ import {
 const ReduxToDo = () => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.BookingForm);
+  const updateList = useSelector((state) => state.BookingList);
+  // booking submit
+  const AddBooking = (e) => {
+    e.preventDefault();
+
+    if (updateList.length >= 3) {
+      toast.error("You can't book more than 3 schedule!", {
+        position: "top-right",
+        autoClose: 1000,
+        theme: "dark",
+      });
+    } else {
+      dispatch(Form_Submit(selector));
+      toast.success("Booking Done Successfully!", {
+        position: "top-right",
+        autoClose: 1000,
+        theme: "dark",
+      });
+    }
+  };
+
   return (
     <div>
-      <form
-        onSubmit={(e) => (e.preventDefault(), dispatch(Form_Submit(selector)))}
-        className="first-hero lws-inputform"
-      >
+      <form onSubmit={AddBooking} className="first-hero lws-inputform">
         <div className="des-from">
           <p>Destination From</p>
           <div className="flex flex-row">
